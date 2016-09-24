@@ -9,12 +9,14 @@
       });
 
       function sendMessage() {
+        var username = document.getElementById("user_name").value;
         var msg = document.getElementById("message_input").value;
-        socketio.emit("message_to_server", { message : msg});
+        socketio.emit("message_to_server", {message : username.bold() + ": " + msg});
       }
     </script>
   </head>
   <body>
+    <input type="text", id="user_name"/>
     <input type="text", id="message_input"/>
     <button onclick="sendMessage()">send</button>
     <div id="chatlog"></div>
