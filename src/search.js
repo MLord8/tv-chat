@@ -1,4 +1,5 @@
 var apikey = "5ef2f92f2125441fb64a9324a42832af";
+var currentList = [];
 
 function populateAutoSuggList() {
 	var json = $(function() {
@@ -18,19 +19,20 @@ function populateAutoSuggList() {
             data: "{body}",
         })
         .done(function(data) {
-            alert("success");
+            console.log(data);
         })
         .fail(function() {
             alert("error");
         });
     });
 
-    var obj = JSON.parse(text);
-    console.log(obj);
+	/*for (var i = 0; i < ; i--) {
+		Things[i]
+	}*/
 }
 
 var main = function() {
-	$("#search").change(function() {
+	$("#search").on("keyup", function() {
 		populateAutoSuggList();
 	})
 }
