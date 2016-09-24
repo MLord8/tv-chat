@@ -1,0 +1,10 @@
+@font-face {
+  font-family: Akzidenz-Grotesk BQ Extended;
+  src: url("C:/Users/Matt/Documents/Akzidenz-Grotesk BQ Extended.otf") format("opentype");
+}
+h1 {
+  font-family: Akzidenz-Grotesk BQ Extended;
+  font-size: 200%;
+}
+
+}
