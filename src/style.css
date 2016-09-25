@@ -39,17 +39,17 @@ body{
 .container-4 input#search::-webkit-input-placeholder {
    color: #65737e;
 }
- 
+
 .container-4 input#search:-moz-placeholder { /* Firefox 18- */
-   color: #65737e;  
+   color: #65737e;
 }
- 
+
 .container-4 input#search::-moz-placeholder {  /* Firefox 19+ */
-   color: #65737e;  
+   color: #65737e;
 }
- 
-.container-4 input#search:-ms-input-placeholder {  
-   color: #65737e;  
+
+.container-4 input#search:-ms-input-placeholder {
+   color: #65737e;
 }
 
 .container-4 button.icon{
@@ -59,7 +59,7 @@ body{
   -moz-border-radius-bottomright: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
- 
+
   border: none;
   background: #232833;
   height: 60px;
@@ -67,7 +67,7 @@ body{
   color: #4f5b66;
   opacity: 0;
   font-size: 10pt;
- 
+
   -webkit-transition: all .55s ease;
   -moz-transition: all .55s ease;
   -ms-transition: all .55s ease;
@@ -80,7 +80,7 @@ body{
   opacity: 1;
   margin-left: -50px;
 }
- 
+
 .container-4:hover button.icon:hover{
   background: #090F0F;
 }
@@ -140,7 +140,7 @@ img{
 
 #cardlist{
   text-align: center;
-  padding-left: 325px;
+  padding-left: 320px;
 }
 
 .card{
