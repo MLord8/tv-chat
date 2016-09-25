@@ -12,18 +12,30 @@
     </div>
 </body>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-<script src=".\node_modules\sendbird\SendBird.min.js"></script>
+<script src="C:\Users\Nikhil\node_modules\sendbird\SendBird.min.js"></script>
 <script>
-var username = 'nrickles3';
+var username = 'nikhilr';
 var sb;
 var appId = 'D74C7631-8912-4A8E-868D-1B1959ACE31A'
 var tv_channel;
+
+
 sb = new SendBird({
     appId: appId
 });
 
+var tvShowTitle = "Show6"; //window.localStorage.getItem("id");
+var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
+var channels = [];
+var channelTitles = [];
+var messages = [];
+var currChannel = null;
+var currChannelURL = "";
+var currTime = 0;
+
 //sb.connect(USER_ID, function(user, error) {});
 sb.connect(username, '8ad51bfd0feff2c6c41b6fe84e1a50085468cd23', function(user, error, callback) {
+    console.log(tvShowTitle);
     execute();
 });
 
@@ -58,14 +70,7 @@ $("#createChannel").click(function() {
 
 //get list of channels
 
-var tvShowTitle = "Show6"
-var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
-var channels = [];
-var channelTitles = [];
-var messages = [];
-var currChannel = null;
-var currChannelURL = "";
-var currTime = 0;
+
 openChannelListQuery.next(function (response, error) {
     if (error) {
         console.log(error);
@@ -73,6 +78,7 @@ openChannelListQuery.next(function (response, error) {
     }
 
     console.log(response);
+    console.log("Hello");
     $.each(response, function(key, value) {
         channels.push({name: value.name, url: value.url});
         channelTitles.push(value.name);
@@ -85,12 +91,14 @@ openChannelListQuery.next(function (response, error) {
                 return;
             }
             console.log(channel);
+            enterChannel();
         });
     }
 });
 
 
 //$("#enterChannel").click(function() {
+function enterChannel() {
     for (var i = 0; i < channels.length; i++) {
         if (tvShowTitle == channels[i].name) {
             //enter an open channel
@@ -106,7 +114,6 @@ openChannelListQuery.next(function (response, error) {
                         console.error(error);
                         return;
                     }
-
                     currChannel = channel;
                     currTime = 0;
                     updateChat();
@@ -115,6 +122,7 @@ openChannelListQuery.next(function (response, error) {
             currChannelURL = channels[i].url;
         }
     }
+}
 //});
 
 /*
