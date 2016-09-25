@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://localhost:1337/socket.io/socket.io.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script src="./public/javascripts/main.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var title = $("#search").val();
+        console.log(title);
+      });
+      var socketio = io.connect("127.0.0.1:1337");
+      socketio.on("message_to_client", function(data) {
+        document.getElementById("chatlog").innerHTML = ("<hr/>" + data['message'] + document.getElementById("chatlog").innerHTML);
+      });
+
+      function sendMessage() {
+        var username = document.getElementById("user_name").value;
+        var msg = document.getElementById("message_input").value;
+        socketio.emit("message_to_server", {message : username.bold() + ": " + msg});
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text", id="user_name"/>
+    <input type="text", id="message_input"/>
+    <button onclick="sendMessage()">send</button>
+    <div id="chatlog"></div>
+  </body>
+</html>
