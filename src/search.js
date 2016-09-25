@@ -78,19 +78,30 @@ function cardList(shows) {
 }
 
 var main = function() {
-	$("#search").on("keyup", function() {
+  $("#search").on("keyup", function() {
 		$("#cards").removeClass("hidden");
 			populateAutoSuggList($("#search").val(), buildList);
 	});
-
+	var visited = [];
+	var i = 0;
 	$(".icon").on("click", function() {
         var field = $("#search").val();
 		$(".intro").addClass("hidden");
 		$(".intermediate").removeClass("hidden");
         $.each(shows, function(key, value) {
-            cardList(value);
+            if(field.toLowerCase() == value.MainTitle.toLowerCase()){
+							 cardList(value);
+							 visited[i] = value.MainTitle;
+							 i++;
+						}
+
         });
-	});
+				$.each(shows, function(key, value) {
+						if(!visited.includes(value.MainTitle)){
+							 cardList(value);
+						}
+				});
+		});
 }
 
 $(document).ready(main());
