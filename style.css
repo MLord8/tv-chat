@@ -1,0 +1,167 @@
+body{
+  background-color: #778899
+}
+
+.box{
+  padding-top: 50px;
+  padding-left: 375px;
+  background-color: transparent;
+}
+
+.container-4{
+  overflow: hidden;
+  width: 550px;
+  vertical-align: middle;
+  white-space: nowrap;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  background-color: transparent;
+}
+
+.container-4 input#search{
+  width: 550px;
+  height: 60px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: #fff;
+  padding-left: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.container-4 input#search::-webkit-input-placeholder {
+   color: #65737e;
+}
+
+.container-4 input#search:-moz-placeholder { /* Firefox 18- */
+   color: #65737e;
+}
+
+.container-4 input#search::-moz-placeholder {  /* Firefox 19+ */
+   color: #65737e;
+}
+
+.container-4 input#search:-ms-input-placeholder {
+   color: #65737e;
+}
+
+.container-4 button.icon{
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  border: none;
+  background: #232833;
+  height: 60px;
+  width: 50px;
+  color: #4f5b66;
+  opacity: 0;
+  font-size: 10pt;
+
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+
+.container-4:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
+  outline: none;
+  opacity: 1;
+  margin-left: -50px;
+}
+
+.container-4:hover button.icon:hover{
+  background: #090F0F;
+}
+
+.container-4 .label{
+
+}
+
+.jumbotron{
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #2b303b;
+  -webkit-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  color: #D3D3D3;
+  font-family: Simplifica;
+}
+
+.jumbotron h1{
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.jumbotron p{
+  font-size: 30px;
+}
+
+@font-face{
+  font-family: Simplifica;
+  src: url(SIMPLIFICA.ttf);
+}
+
+#logos{
+  padding-top: 70px;
+  text-align: center;
+  font-family: Simplifica
+}
+
+#logos p{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+img{
+  max-height: 30px;
+  max-width: auto;
+}
+
+.intermediate h1 {
+  font-family: Simplifica;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+#cardlist{
+  text-align: center;
+  margin-left: 33%;
+}
+
+.card{
+  background-color: #2b303b;
+  border-radius: 10px;
+  margin: 10px;
+  border: 30px;
+  padding: 30px;
+  color:#D3D3D3;
+}
+
+.card h3{
+  font-size: 40px;
+  font-family: Simplifica;
+  font-weight: bold;
+}
+
+.card p{
+  font-size: 20px;
+}
+
+.card .btn {
+  font-size: 20px;
+}
