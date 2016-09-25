@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+
+.canvasjs-chart-credit {
+   display: none;
+}
+
+</style>
+
+<html>
+<head>
+
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+
+</head>
+
+<body>
+    <div id="barContainer" style="height: 900px; width: 300px;"></div>
+    <div id="chartContainer" style="position: absolute; left: 300px; top: 0px; height: 900px; width: 1000px;"></div>
+</body>
+
+</html>
+
+<script>
+
+var yVal = 0;
+var xVal = 0;
+var bar;
+var barDataset;
+var chart;
+var chartDataset;
+
+window.onload = function() {
+    barDataset = [{x: 0, y: 100, indexLabel: yVal + "%"}];
+    bar = new CanvasJS.Chart("barContainer", {
+        title :{
+            text: "Average Sentiment"
+        },
+        axisY:{
+         valueFormatString: " ",
+         gridThickness: 0,
+         lineThickness: 0,
+         tickLength: 0
+        },
+        axisX:{
+          valueFormatString: " ",
+          gridThickness: 0,
+          lineThickness: 0,
+          tickLength: 0
+        },
+        toolTip:{
+            enabled: false
+        },
+        data: [{
+                type: "column",
+                dataPoints: barDataset
+            },
+            {
+                color: "rgba(0,0,0,0)",
+                dataPoints: [{x: 0, y: 100}]
+            }]
+    });
+
+    bar.render();
+
+    chartDataset = [{x: 1, y:10}];
+    xVal = chartDataset.length + 1;
+    chart = new CanvasJS.Chart("chartContainer", {
+        zoomEnabled: true,
+        title: {
+            text: "Over Time"
+        },
+        axisX: {
+            title: "Time"
+        },
+        axisY: {
+            title: "Sentiment"
+        },
+        data: [{
+            type: "line",
+            dataPoints: chartDataset
+        }]
+    });
+
+    chart.render();
+}
+
+function updateBar() {
+    yVal += 5;
+    barDataset[0].y = yVal;
+    barDataset[0].indexLabel = yVal + "%";
+    bar.render();
+}
+
+function updateChart() {
+    chartDataset.push({x: xVal, y: 15 + Math.round(5 + Math.random() *(-5-5))});
+    xVal++;
+    chart.render();
+}
+
+setInterval(function() {
+    if (xVal <= 60) {
+        updateBar();
+        updateChart();
+    }
+}, 300);
+
+</script>
