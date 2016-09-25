@@ -44,6 +44,7 @@ sb.OpenChannel.createChannel(NAME, COVER_URL, DATA, function (channel, error) {
     console.log(channel);
 });
 */
+/*
 $("#createChannel").click(function() {
     sb.OpenChannel.createChannel($("#message").val(), '', '', function (channel, error) {
         if (error) {
@@ -53,12 +54,14 @@ $("#createChannel").click(function() {
         console.log(channel);
     });
 });
-
+*/
 
 //get list of channels
 
+var tvShowTitle = "Show6"
 var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 var channels = [];
+var channelTitles = [];
 var messages = [];
 var currChannel = null;
 var currChannelURL = "";
@@ -72,14 +75,24 @@ openChannelListQuery.next(function (response, error) {
     console.log(response);
     $.each(response, function(key, value) {
         channels.push({name: value.name, url: value.url});
+        channelTitles.push(value.name);
     });
     console.log(channels);
+    if (!channelTitles.includes(tvShowTitle)) {
+        sb.OpenChannel.createChannel(tvShowTitle, '', '', function (channel, error) {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            console.log(channel);
+        });
+    }
 });
 
 
-$("#enterChannel").click(function() {
+//$("#enterChannel").click(function() {
     for (var i = 0; i < channels.length; i++) {
-        if ($("#message").val() == channels[i].name) {
+        if (tvShowTitle == channels[i].name) {
             //enter an open channel
             sb.OpenChannel.getChannel(channels[i].url, function (channel, error, callback) {
                 if (error) {
@@ -102,7 +115,7 @@ $("#enterChannel").click(function() {
             currChannelURL = channels[i].url;
         }
     }
-});
+//});
 
 /*
 //exiting a channel
