@@ -126,7 +126,42 @@ body{
   font-size: 30px;
   font-weight: bold;
 }
+
 img{
   max-height: 30px;
   max-width: auto;
+}
+
+.intermediate h1 {
+  font-family: Simplifica;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+#cardlist{
+  text-align: center;
+  padding-left: 325px;
+}
+
+.card{
+  background-color: #2b303b;
+  border-radius: 10px;
+  margin: 10px;
+  border: 30px;
+  padding: 30px;
+  color:#D3D3D3;
+}
+
+.card h3{
+  font-size: 40px;
+  font-family: Simplifica;
+  font-weight: bold;
+}
+
+.card p{
+  font-size: 20px;
+}
+
+.card .btn {
+  font-size: 20px;
 }
