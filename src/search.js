@@ -2,7 +2,6 @@ var apikey = "5ef2f92f2125441fb64a9324a42832af";
 var currentList = [];
 var json;
 
-
 function populateAutoSuggList(input, callback) {
 
 		var params = {
@@ -86,8 +85,8 @@ var main = function() {
 	var i = 0;
 	$(".icon").on("click", function() {
         var field = $("#search").val();
-		$(".intro").addClass("hidden");
-		$(".intermediate").removeClass("hidden");
+		$(".intro").fadeOut().addClass("hidden");
+		$(".intermediate").fadeIn().removeClass("hidden");
         $.each(shows, function(key, value) {
             if(field.toLowerCase() == value.MainTitle.toLowerCase()){
 							 cardList(value);
