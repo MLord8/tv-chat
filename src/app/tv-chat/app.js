@@ -8,30 +8,10 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-var appl = require('http').createServer(handler)
-var io = require('socket.io')(app);
-var fs = require('fs');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-appl.listen(80);
-
-function handler (req, res) {
-    fs.readFile('views/client.html', function (err, data) {
-        if (err) {
-            res.writeHead(500);
-            return res.end('Error loading client.html');
-        }
-        res.writeHead(200);
-        res.end(data);
-    });
-}
-
-io.on('connection', function(socket) {
-    socket.emit('news', {hello: 'world'});
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-});
-        
+server.listen(1337);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,7 +33,14 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res){
-    res.sendFile('client.html');
+    res.sendFile("views/index.html");
+});
+
+io.on('connection', function (socket) {
+    socket.emit('news', {hello: 'world'});
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
 });
 
 // error handlers
