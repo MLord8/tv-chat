@@ -39,9 +39,16 @@ var list = function populateAutoSuggList(input) {
 
 var main = function() {
 	$("#search").on("keyup", function() {
-		console.log($("#search").val())
 		var list = populateAutoSuggList($("#search").val());
-	})
+		$.each(list, function(key, value) {
+			$("#cards").append($("list-group-item").text(value));
+		});
+	});
+
+	$(".icon").on("click", function() {
+		$(".box").addClass("hidden");
+		$(".chatpage").removeClass("hidden");
+	});
 }
 
 $(document).ready(main());
