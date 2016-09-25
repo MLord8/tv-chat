@@ -1,15 +1,17 @@
 var apikey = "5ef2f92f2125441fb64a9324a42832af";
 var currentList = [];
+var json;
 
-function populateAutoSuggList() {
-	var json = $(function() {
+
+var list = function populateAutoSuggList(input) {
+	
 		var params = {
             // Request parameters
-            "q": $("#search").val(),
+            "q": input,
         };
-      
+      	
         $.ajax({
-            url: "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?" + $.param(params),
+            url: "https://api.cognitive.microsoft.com/bing/v5.0/suggestions/?" + "q=" + input,
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", apikey);
@@ -19,21 +21,26 @@ function populateAutoSuggList() {
             data: "{body}",
         })
         .done(function(data) {
-            console.log(data);
+        	json = Object.assign({}, data);
+        	console.log(json);
+        	var newList = [];
+        	$.each(json.suggestionGroups[0].searchSuggestions, function(key, value) {
+        		newList.push(value.displayText);
+        	})
+        	
+			currentList = newList;
+			console.log(newList);
+			return currentList;
         })
         .fail(function() {
             alert("error");
-        });
-    });
-
-	/*for (var i = 0; i < ; i--) {
-		Things[i]
-	}*/
+        });	
 }
 
 var main = function() {
 	$("#search").on("keyup", function() {
-		populateAutoSuggList();
+		console.log($("#search").val())
+		var list = populateAutoSuggList($("#search").val());
 	})
 }
 
