@@ -1,0 +1,153 @@
+<html>
+<body>
+    <input type="text", id="message"></input>
+    <button id="sendMessage">Send</button>
+    <button id="createChannel">Create Channel</button>
+    <button id="enterChannel">Enter Channel</button>
+    <div id="chatBox" style="position: absolute; top: 150px; background: gray; width: 400; height: 400"></div>
+</body>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script src="C:\Users\wadoo_000\Desktop\College\SideProjects\tv-chat\src\node_modules\sendbird\SendBird.min.js"></script>
+<script>
+
+var sb;
+var appId = 'D74C7631-8912-4A8E-868D-1B1959ACE31A'
+var tv_channel;
+sb = new SendBird({
+    appId: appId
+});
+
+//sb.connect(USER_ID, function(user, error) {});
+sb.connect('nrickles3', '8ad51bfd0feff2c6c41b6fe84e1a50085468cd23', function(user, error, callback) {
+    execute();
+});
+
+function execute() {
+/*
+sb.updateCurrentUserInfo(NICKNAME, PROFILE_URL, function(response, error) {
+  console.log(response, error);
+}); //is this necessary?
+*/
+
+/*
+//dynamically creating channels
+sb.OpenChannel.createChannel(NAME, COVER_URL, DATA, function (channel, error) {
+    if (error) {
+        console.error(error);
+        return;
+    }
+    console.log(channel);
+});
+*/
+$("#createChannel").click(function() {
+    sb.OpenChannel.createChannel($("#message").val(), '', '', function (channel, error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        console.log(channel);
+    });
+});
+
+
+//get list of channels
+
+var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
+var channels = [];
+var currChannel = null;
+var currChannelURL = "";
+openChannelListQuery.next(function (response, error) {
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    console.log(response);
+    $.each(response, function(key, value) {
+        channels.push({name: value.name, url: value.url});
+    });
+    console.log(channels);
+});
+
+
+$("#enterChannel").click(function() {
+    for (var i = 0; i < channels.length; i++) {
+        console.log(channels[i].name);
+        if ($("#message").val() == channels[i].name) {
+            //enter an open channel
+            sb.OpenChannel.getChannel(channels[i].url, function (channel, error) {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                console.log(channel);
+
+                channel.enter(function(response, error){
+                    if (error) {
+                        console.error(error);
+                        return;
+                    }
+                    console.log(response);
+
+                currChannel = channel;
+
+                });
+            });
+            currChannelURL = channels[i].url;
+        }
+    }
+});
+
+/*
+//exiting a channel
+sb.OpenChannel.getChannel(CHANNEL_URL, function (channel, error) {
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    channel.exit(function(response, error){
+        if (error) {
+            console.error(error);
+            return;
+        }
+    });
+});
+
+//loading previous messages
+var messageListQuery = channel.createPreviousMessageListQuery();
+
+messageListQuery.load(20, true, function(messageList, error){
+    if (error) {
+        console.error(error);
+        return;
+    }
+    console.log(messageList);
+});
+*/
+//sending messages
+$("#sendMessage").click(function() {
+    currChannel.sendUserMessage($("#message").val(), '', function(message, error){
+        if (error) {
+            console.error(error);
+            return;
+        }
+        console.log(message);
+    });
+})
+
+//receiving messages
+var ChannelHandler = new sb.ChannelHandler();
+
+ChannelHandler.onMessageReceived = function(channel, message){
+    console.log(channel, message);
+    channel.refresh(function() {
+    });
+    $("#chatBox").append(message);
+    scrollPositionBottom();
+};
+
+sb.addChannelHandler(currChannelURL, ChannelHandler);
+
+}
+</script>
