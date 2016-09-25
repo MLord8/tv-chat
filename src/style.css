@@ -185,11 +185,12 @@ img{
 }
 
 .container-8 {
-  background-color: #2b303b;
+  background-color: white;
   border-radius: 10px;
   -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  overflow: auto;
 }
 
 #chatbox p {
