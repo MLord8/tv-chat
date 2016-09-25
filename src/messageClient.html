@@ -1,9 +1,15 @@
 <html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <input type="text", id="message"></input>
-    <button id="sendMessage">Send</button>
-    <button id="enterChannel">Enter Channel</button>
-    <div id="chatBox" style="position: absolute; top: 150px; background: gray; width: 400; height: 400"></div>
+    <div class="container-8" id="chatBox" style="position: absolute; width: 500; height: 400"></div>
+    <div class = "container-4" id="inputs">
+        <input type="text", id="message"></input>
+        <button class="btn btn-primary" id="sendMessage">Send Message</button>
+    </div>
 </body>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 <script src=".\node_modules\sendbird\SendBird.min.js"></script>

@@ -165,3 +165,34 @@ img{
 .card .btn {
   font-size: 20px;
 }
+
+#inputs {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  background-color: #2b303b;
+}
+
+#message {
+  margin: 10px;
+  width: 300px;
+}
+
+#chatbox {
+  margin-left: 50 px;
+  top:130px;
+  left: 45px;
+}
+
+.container-8 {
+  background-color: #2b303b;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4), 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+#chatbox p {
+  color: color:#D3D3D3;
+  border-style: solid;
+}
