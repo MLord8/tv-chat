@@ -3,8 +3,8 @@ body{
 }
 
 .box{
-  padding-top: 200px;
-  padding-left: 350px;
+  padding-top: 50px;
+  padding-left: 375px;
   background-color: transparent;
 }
 
@@ -87,4 +87,30 @@ body{
 
 .container-4 .label{
 
+}
+
+.jumbotron{
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #2b303b;
+  -webkit-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+  color: #D3D3D3;
+  font-family: Simplifica;
+}
+
+.jumbotron h1{
+  font-size: 100px;
+}
+
+.jumbotron p{
+  font-size: 30px;
+}
+
+@font-face{
+  font-family: Simplifica;
+  src: url(SIMPLIFICA.ttf);
 }

@@ -26,12 +26,11 @@ function populateAutoSuggList(input, callback) {
         	$.each(json.suggestionGroups[0].searchSuggestions, function(key, value) {
         		newList.push(value.displayText);
         	})
-        	
+
 			currentList = newList;
 			callback();
         })
         .fail(function() {
-            alert("error");
         });	
 }
 
