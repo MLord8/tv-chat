@@ -3,7 +3,7 @@ body{
 }
 
 .box{
-  padding-top: 100px;
+  padding-top: 200px;
   padding-left: 350px;
   background-color: transparent;
 }
@@ -83,4 +83,8 @@ body{
  
 .container-4:hover button.icon:hover{
   background: #090F0F;
+}
+
+.container-4 .label{
+
 }

@@ -3,7 +3,7 @@ var currentList = [];
 var json;
 
 
-var list = function populateAutoSuggList(input) {
+function populateAutoSuggList(input, callback) {
 	
 		var params = {
             // Request parameters
@@ -22,29 +22,34 @@ var list = function populateAutoSuggList(input) {
         })
         .done(function(data) {
         	json = Object.assign({}, data);
-        	console.log(json);
         	var newList = [];
         	$.each(json.suggestionGroups[0].searchSuggestions, function(key, value) {
         		newList.push(value.displayText);
         	})
         	
 			currentList = newList;
-			console.log(newList);
-			return currentList;
+			callback();
         })
         .fail(function() {
             alert("error");
         });	
 }
 
+function buildList() {
+	$(".list-group").empty();
+	$.each(currentList, function(key, value) {
+		$(".list-group").append($('<li class="list-group-item">').text(value));
+	})
+	if (currentList.length == 0) {
+		$("#cards").addClass("hidden");
+	}
+}
+
 var main = function() {
 	$("#search").on("keyup", function() {
-		var list = populateAutoSuggList($("#search").val());
-		$.each(list, function(key, value) {
-			$("#cards").append($("list-group-item").text(value));
-		});
+		$("#cards").removeClass("hidden");
+			populateAutoSuggList($("#search").val(), buildList);
 	});
-
 	$(".icon").on("click", function() {
 		$(".box").addClass("hidden");
 		$(".chatpage").removeClass("hidden");
