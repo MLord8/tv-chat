@@ -12,9 +12,9 @@
     </div>
 </body>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-<script src="C:\Users\Nikhil\node_modules\sendbird\SendBird.min.js"></script>
+<script src=".\node_modules\sendbird\SendBird.min.js"></script>
 <script>
-var username = 'nikhilr';
+var username = 'nrickles3';
 var sb;
 var appId = 'D74C7631-8912-4A8E-868D-1B1959ACE31A'
 var tv_channel;
@@ -23,7 +23,8 @@ sb = new SendBird({
     appId: appId
 });
 
-var tvShowTitle = "Show6"; //window.localStorage.getItem("id");
+var apikey = "daf59fe2ddab4bb297e7134a44daed3f";
+var tvShowTitle = "Show6";//window.localStorage.getItem("id");
 var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 var channels = [];
 var channelTitles = [];
@@ -39,36 +40,6 @@ sb.connect(username, '8ad51bfd0feff2c6c41b6fe84e1a50085468cd23', function(user, 
 });
 
 function execute() {
-/*
-sb.updateCurrentUserInfo(NICKNAME, PROFILE_URL, function(response, error) {
-  console.log(response, error);
-}); //is this necessary?
-*/
-
-/*
-//dynamically creating channels
-sb.OpenChannel.createChannel(NAME, COVER_URL, DATA, function (channel, error) {
-    if (error) {
-        console.error(error);
-        return;
-    }
-    console.log(channel);
-});
-*/
-/*
-$("#createChannel").click(function() {
-    sb.OpenChannel.createChannel($("#message").val(), '', '', function (channel, error) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        console.log(channel);
-    });
-});
-*/
-
-//get list of channels
-
 
 openChannelListQuery.next(function (response, error) {
     if (error) {
@@ -77,7 +48,6 @@ openChannelListQuery.next(function (response, error) {
     }
 
     console.log(response);
-    console.log("Hello");
     $.each(response, function(key, value) {
         channels.push({name: value.name, url: value.url});
         channelTitles.push(value.name);
@@ -98,7 +68,6 @@ openChannelListQuery.next(function (response, error) {
 
 //$("#enterChannel").click(function() {
 function enterChannel() {
-    console.log("101");
     for (var i = 0; i < channels.length; i++) {
         if (tvShowTitle == channels[i].name) {
             //enter an open channel
@@ -115,7 +84,6 @@ function enterChannel() {
                         return;
                     }
                     currChannel = channel;
-                    console.log("as;ldjfhal;sjfdh;lasjf");
                     currTime = 0;
                     updateChat();
                 });
@@ -124,57 +92,72 @@ function enterChannel() {
         }
     }
 }
-//});
 
-/*
-//exiting a channel
-sb.OpenChannel.getChannel(CHANNEL_URL, function (channel, error) {
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    channel.exit(function(response, error){
-        if (error) {
-            console.error(error);
-            return;
-        }
-    });
-});
-
-//loading previous messages
-var messageListQuery = channel.createPreviousMessageListQuery();
-
-messageListQuery.load(20, true, function(messageList, error){
-    if (error) {
-        console.error(error);
-        return;
-    }
-    console.log(messageList);
-});
-*/
 //sending messages
 $("#sendMessage").click(function() {
-    console.log("158");
     currChannel.sendUserMessage($("#message").val(), '', function(message, error, callback){
         if (error) {
             console.error(error);
             return;
         }
         console.log(message);
+
+        calculateSentiment($("#message").val(), createGraph);
         updateChat();
     });
-    $("#message").empty();
 })
 
+function calculateSentiment(input, callback) {
+    var params =
+    {
+
+    }
+
+    var data = {
+      "documents": [
+        {
+          "language": "en",
+          "id": "string",
+          "text": input
+        }
+      ]
+  }
+
+    $.ajax({
+        url: "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment?",
+        beforeSend: function(xhrObj){
+            // Request headers
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", apikey);
+            xhrObj.setRequestHeader("Content-Type","application/json");
+        },
+        type: "POST",
+        // Request body
+        data: JSON.stringify(data),
+  })
+    .done(function(data) {
+        console.log(data);
+        /*json = Object.assign({}, data);
+        var newList = [];
+        $.each(json.suggestionGroups[0].searchSuggestions, function(key, value) {
+            newList.push(value.displayText);
+        })
+
+        currentList = newList;*/
+        callback();
+    })
+    .fail(function() {
+        alert("error");
+    });
+}
+
+function createGraph() {
+
+}
+
 function updateChat() {
-    console.log("170");
     $("#chatBox").empty();
-    console.log(messages.length);
     for (var i = 0; i < messages.length; i++) {
-        console.log("here");
         if (messages[i].createdAt > currTime) {
-            console.log("<p><b>" + messages[i].nickname + "</b>: " + messages[i].message + "</p>");
             $("#chatBox").append("<p><b>" + messages[i].nickname + "</b>: " + messages[i].message + "</p>");
         }
     }
@@ -182,7 +165,6 @@ function updateChat() {
 }
 
 function statusUpdate() {
-    console.log("180");
     setInterval(function() {
             messages = [];
             var messageListQuery = currChannel.createPreviousMessageListQuery();
@@ -201,7 +183,7 @@ function statusUpdate() {
             }
             currTime = messages[0].createdAt;
         });
-    }, 1000);
+    }, 10000);
 }
 
 var ConnectionHandler = new sb.ConnectionHandler();
@@ -218,19 +200,6 @@ ConnectionHandler.onReconnectFailed = function(){
     alert("reconnect failed");
 };
 sb.addConnectionHandler('uniqueID', ConnectionHandler);
-
-//receiving messages
-/*var ChannelHandler = new sb.ChannelHandler();
-
-ChannelHandler.onMessageReceived = function(channel, message){
-    console.log('ChannelHandler.onMessageReceived: ', channel, message);
-};
-
-sb.addChannelHandler('UNIQUE_HANDLER_ID', ChannelHandler);
-function receiveMessage() {
-    $("#chatBox").append("<p>test</p>");
-}
-*/
 
 }
 </script>
