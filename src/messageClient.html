@@ -10,8 +10,11 @@
         <input type="text", id="message"></input>
         <button class="btn btn-primary" id="sendMessage">Send Message</button>
     </div>
+    <div id="barContainer" style="position: absolute; top: 550px; height: 300px; width: 300px;"></div>
+    <div id="chartContainer" style="position: absolute; left: 300px; top: 550px; height: 300px; width: 1000px;"></div>
 </body>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src=".\node_modules\sendbird\SendBird.min.js"></script>
 <script>
 var username = 'nrickles3';
@@ -24,7 +27,7 @@ sb = new SendBird({
 });
 
 var apikey = "daf59fe2ddab4bb297e7134a44daed3f";
-var tvShowTitle = "Show6";//window.localStorage.getItem("id");
+var tvShowTitle = "TestChannel"; //window.localStorage.getItem("id");
 var openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 var channels = [];
 var channelTitles = [];
@@ -85,10 +88,14 @@ function enterChannel() {
                     }
                     currChannel = channel;
                     currTime = 0;
+                    createGraphs();
                     updateChat();
                 });
             });
             currChannelURL = channels[i].url;
+            setInterval(function() {
+                updateSentiment();
+            }, 1000);
         }
     }
 }
@@ -102,17 +109,13 @@ $("#sendMessage").click(function() {
         }
         console.log(message);
 
-        calculateSentiment($("#message").val(), createGraph);
+        calculateSentiment($("#message").val(), updateSentiment);
         updateChat();
     });
 })
 
+var sentimentArr = [{x: 0, y: 100}];
 function calculateSentiment(input, callback) {
-    var params =
-    {
-
-    }
-
     var data = {
       "documents": [
         {
@@ -136,13 +139,10 @@ function calculateSentiment(input, callback) {
   })
     .done(function(data) {
         console.log(data);
-        /*json = Object.assign({}, data);
-        var newList = [];
-        $.each(json.suggestionGroups[0].searchSuggestions, function(key, value) {
-            newList.push(value.displayText);
-        })
+        json = Object.assign({}, data);
+        sentimentArr.push({y: json.documents[0].score * 100});
+        console.log(sentimentArr);
 
-        currentList = newList;*/
         callback();
     })
     .fail(function() {
@@ -150,8 +150,83 @@ function calculateSentiment(input, callback) {
     });
 }
 
-function createGraph() {
+var yVal = 0;
+var xVal = 0;
+var bar;
+var barDataset;
+var chart;
+var chartArr = [{x: 0, y: 100}];
+function createGraphs() {
+    barDataset = [{x: 0, y: 100, indexLabel: "100%"}];
+    bar = new CanvasJS.Chart("barContainer", {
+        //backgroundColor: "blue",
+        title :{
+            text: "Average Sentiment (0 = negative, 100 = positive)"
+        },
+        axisY:{
+         valueFormatString: " ",
+         gridThickness: 0,
+         lineThickness: 0,
+         tickLength: 0
+        },
+        axisX:{
+          valueFormatString: " ",
+          gridThickness: 0,
+          lineThickness: 0,
+          tickLength: 0
+        },
+        toolTip:{
+            enabled: false
+        },
+        data: [{
+                type: "column",
+                dataPoints: barDataset
+            },
+            {
+                color: "rgba(0,0,0,0)",
+                dataPoints: [{x: 0, y: 100}]
+            }]
+    });
 
+    bar.render();
+
+    chart = new CanvasJS.Chart("chartContainer", {
+        zoomEnabled: true,
+        //backgroundColor: "blue",
+        title: {
+            text: "Sentiment Over Time"
+        },
+        axisX: {
+            title: "Time (min)"
+        },
+        axisY: {
+            title: "Sentiment (%)"
+        },
+        data: [{
+            type: "line",
+            dataPoints: chartArr
+        }]
+    });
+
+    chart.render();
+}
+
+function updateSentiment() {
+    var sum = 0;
+    xVal = chartArr[chartArr.length - 1].x + (1/60);
+    if (sentimentArr.length > 1) {
+        for (var i = 0; i < sentimentArr.length; i++) {
+            sum += sentimentArr[i].y;
+        }
+        var avg = Math.round(sum / sentimentArr.length);
+        console.log(avg);
+        //chartDataset.push(avg);
+        barDataset[0].y = avg;
+        barDataset[0].indexLabel = avg + "%";
+        chartArr.push({x: xVal, y: avg});
+        bar.render();
+        chart.render();
+    }
 }
 
 function updateChat() {
@@ -173,7 +248,6 @@ function statusUpdate() {
                     console.error(error);
                     return;
                 }
-                console.log(messageList);
                 $.each(messageList, function(key, value) {
                     messages.push({nickname: value.sender.userId, message: value.message, createdAt: value.createdAt});
              });
@@ -183,7 +257,8 @@ function statusUpdate() {
             }
             currTime = messages[0].createdAt;
         });
-    }, 10000);
+
+    }, 3000);
 }
 
 var ConnectionHandler = new sb.ConnectionHandler();
