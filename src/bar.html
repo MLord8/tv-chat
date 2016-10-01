@@ -37,7 +37,7 @@ window.onload = function() {
     barDataset = [{x: 0, y: 100, indexLabel: yVal + "%"}];
     bar = new CanvasJS.Chart("barContainer", {
         title :{
-            text: "Average Sentiment"
+            text: "Average Sentiment (0 = negative, 100 = positive)"
         },
         axisY:{
          valueFormatString: " ",
@@ -71,13 +71,13 @@ window.onload = function() {
     chart = new CanvasJS.Chart("chartContainer", {
         zoomEnabled: true,
         title: {
-            text: "Over Time"
+            text: "Sentiment Over Time"
         },
         axisX: {
-            title: "Time"
+            title: "Time (min)"
         },
         axisY: {
-            title: "Sentiment"
+            title: "Sentiment (%)"
         },
         data: [{
             type: "line",

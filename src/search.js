@@ -65,7 +65,7 @@ function cardList(shows) {
     //$p2.addClass("card-text");
     //$p2.addText(shows.Description);
 
-    var $a = $('<a href="messageClient.html" class="btn btn-primary" id='+shows.MainTitle+'>' + "Go to this chat!" + '</a>');
+    var $a = $('<a href="messageClient.html" class="btn btn-primary" id="'+shows.MainTitle+'">' + "Go to this chat!" + '</a>');
     //$a.addClass("btn btn-primary");
     //$a.addText("Go to this chat!");
     $parent.append($h3);
@@ -101,10 +101,6 @@ var main = function() {
 						}
 				});
 		});
-
-    $(".card .btn .btn-primary").on("click", function() {
-        localStorage.setItem("id", $(this).id);
-    })
 
 }
 
