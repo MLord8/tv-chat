@@ -26,7 +26,6 @@ $('#searchButton').click(function() {
 function main() {
     $('.btn.btn-primary').click(function() {
         name = $(this).attr('id');
-        alert(name);
     });
 }
 
